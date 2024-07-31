@@ -23,3 +23,6 @@
 
 - [calculate_SI-SNR.py](./calculate_PESQ.py)
     - 遍历指定文件夹中的所有wav文件，计算每个文件的PESQ值以及平均PESQ值
+
+- [dnsmos_local_no_csv.py](./dnsmos_local_no_csv.py)
+    - 遍历指定文件夹中的所有wav文件，计算平均BAK, SIG, OVRL等值
