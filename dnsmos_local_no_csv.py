@@ -147,8 +147,8 @@ if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', "--testset_dir", default='.', 
                         help='Path to the dir containing audio clips in .wav to be evaluated')
-    parser.add_argument('-p', "--personalized_MOS", action='store_true', 
-                        help='Flag to indicate if personalized MOS score is needed or regular')
+    # parser.add_argument('-p', "--personalized_MOS", action='store_true', 
+                        # help='Flag to indicate if personalized MOS score is needed or regular')
     
     args = parser.parse_args()
 
