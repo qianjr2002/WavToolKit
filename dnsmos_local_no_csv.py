@@ -143,12 +143,19 @@ def main(args):
     print(f"Average BAK: {mean_BAK}")
     print(f"Average P808_MOS: {mean_P808_MOS}")
 
+    result = {
+        'OVRL': round(mean_OVRL, 3),
+        'SIG' : round(mean_SIG, 3),
+        'BAK' : round(mean_BAK, 3)
+    }
+    print(result)
+
 if __name__=="__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('-t', "--testset_dir", default='.', 
                         help='Path to the dir containing audio clips in .wav to be evaluated')
-    # parser.add_argument('-p', "--personalized_MOS", action='store_true', 
-                        # help='Flag to indicate if personalized MOS score is needed or regular')
+    parser.add_argument('-p', "--personalized_MOS", action='store_true', 
+                        help='Flag to indicate if personalized MOS score is needed or regular')
     
     args = parser.parse_args()
 
