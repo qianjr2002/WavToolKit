@@ -12,6 +12,9 @@
 - [plot_wav.py](./plot_wav.py)
     - 画出单通道wav文件的时域波形图以及频域功率谱图
 
+- [trim_silence.py](./trim_silence.py)
+    - 去除wav文件中的静音段，默认阈值为30db
+
 - [calculate_wavfile_SI-SNR.py](./calculate_wavfile_SI-SNR.py)
     - 计算一对wav文件的SI-SNR值
 
