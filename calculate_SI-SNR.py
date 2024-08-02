@@ -5,7 +5,7 @@ from torchmetrics.functional.audio import scale_invariant_signal_noise_ratio
 import soundfile as sf
 
 '''
-python calculate_SI-SNR --clean_folder wav/clean --noisy_folder wav/noisy
+python calculate_SI-SNR --clean_folder wav/clean --enhanced_folder wav/noisy
 '''
 
 def calculate_si_snr(clean_folder, noisy_folder):
@@ -30,7 +30,7 @@ def calculate_si_snr(clean_folder, noisy_folder):
 def main():
     parser = argparse.ArgumentParser(description="Calculate SI-SNR for WAV files in specified folders.")
     parser.add_argument('--clean_folder', type=str, required=True, help="Path to the folder containing clean WAV files")
-    parser.add_argument('--noisy_folder', type=str, required=True, help="Path to the folder containing noisy WAV files")
+    parser.add_argument('--enhanced_folder', type=str, required=True, help="Path to the folder containing enhanced WAV files")
     args = parser.parse_args()
     
     calculate_si_snr(args.clean_folder, args.noisy_folder)
