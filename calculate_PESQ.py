@@ -4,8 +4,8 @@ from scipy.io import wavfile
 from pesq import pesq
 
 '''
-python calculate_PESQ.py --clean_folder wav/clean --noisy_folder wav/noisy --mode wb
-python calculate_PESQ.py --clean_folder wav/clean --noisy_folder wav/noisy
+python calculate_PESQ.py --clean_folder wav/clean --enhanced_folder wav/noisy --mode wb
+python calculate_PESQ.py --clean_folder wav/clean --enhanced_folder wav/noisy
 '''
 
 def calculate_pesq_scores(clean_folder, noisy_folder, mode):
@@ -31,7 +31,7 @@ def calculate_pesq_scores(clean_folder, noisy_folder, mode):
 def main():
     parser = argparse.ArgumentParser(description="Calculate PESQ scores for WAV files in specified folders.")
     parser.add_argument('--clean_folder', type=str, required=True, help="Path to the folder containing clean WAV files")
-    parser.add_argument('--noisy_folder', type=str, required=True, help="Path to the folder containing noisy WAV files")
+    parser.add_argument('--enhanced_folder', type=str, required=True, help="Path to the folder containing enhanced WAV files")
     parser.add_argument('--mode', type=str, choices=['wb', 'nb'], default='wb', help="PESQ mode: 'wb' for wideband or 'nb' for narrowband (default: 'wb')")
     args = parser.parse_args()
     
