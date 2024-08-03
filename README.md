@@ -30,7 +30,7 @@
 - [calculate_wavfile_STOI.py](./calculate_wavfile_STOI.py)
     - 计算一对wav文件的STOI值
 
-- [](./calculate_STOI.py)
+- [calculate_STOI.py](./calculate_STOI.py)
     - 遍历指定文件夹中的所有wav文件，计算每个文件的STOI值以及平均STOI值
 
 - [dnsmos_local_no_csv.py](./dnsmos_local_no_csv.py)
