@@ -15,9 +15,9 @@ def calculate_pesq(clean_file, noisy_file, mode):
 
 def main():
     parser = argparse.ArgumentParser(description="Calculate PESQ for WAV files.")
-    parser.add_argument('--clean_file', type=str, required=True, help="Path to the clean WAV file")
-    parser.add_argument('--enhanced_file', type=str, required=True, help="Path to the enhanced WAV file")
-    parser.add_argument('--mode', type=str, choices=['wb', 'nb'], default='wb', help="PESQ mode: 'wb' for wideband or 'nb' for narrowband (default: 'wb')")
+    parser.add_argument('--clean_file', '-c', type=str, required=True, help="Path to the clean WAV file")
+    parser.add_argument('--enhanced_file', '-e', type=str, required=True, help="Path to the enhanced WAV file")
+    parser.add_argument('--mode', '-m', type=str, choices=['wb', 'nb'], default='wb', help="PESQ mode: 'wb' for wideband or 'nb' for narrowband (default: 'wb')")
     args = parser.parse_args()
     
     pesq_score = calculate_pesq(args.clean_file, args.noisy_file, args.mode)
