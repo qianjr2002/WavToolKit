@@ -3,7 +3,7 @@ from sigmos.sigmos import SigMOS
 import librosa
 
 '''
-python sigmos_score.py -a ../dataset/clean_testset_wav/p232_041.wav
+python evaluate_wavfile_sigmos.py -a ../dataset/clean_testset_wav/p232_041.wav
 '''
 
 def main():

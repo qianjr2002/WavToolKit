@@ -12,7 +12,7 @@ import soundfile as sf
 from tqdm import tqdm
 
 '''
-python dnsmos_local_no_csv.py -t wav/noisy
+python evaluate_dnsmos.py -t wav/noisy
 '''
 
 SAMPLING_RATE = 16000
