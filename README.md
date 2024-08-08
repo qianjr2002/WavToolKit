@@ -33,5 +33,22 @@
 - [calculate_STOI.py](./calculate_STOI.py)
     - 遍历指定文件夹中的所有wav文件，计算每个文件的STOI值以及平均STOI值
 
-- [dnsmos_local_no_csv.py](./dnsmos_local_no_csv.py)
+- [evaluate_sigmos.py](./evaluate_sigmos.py)
     - 遍历指定文件夹中的所有wav文件，计算平均BAK, SIG, OVRL等值
+
+- [evaluate_wavfile_sigmos.py](./sigmos_score.py)
+    - 评估单个文件的MOS_COL, MOS_DISC, MOS_LOUD, MOS_NOISE, MOS_REVERB, MOS_SIG, MOS_OVRL值
+
+- [evaluate_sigmos.py](./evaluate_sigmos.py)
+    - 遍历指定文件夹中的所有wav文件，评估平均MOS_COL, MOS_DISC, MOS_LOUD, MOS_NOISE等值
+
+---
+gtcrn 批量降噪
+
+```
+├── gtcrn.py
+├── gtcrn_batch_infer.py
+└── gtcrn_checkpoints
+    ├── model_trained_on_dns3.tar
+    └── model_trained_on_vctk.tar
+ ```
