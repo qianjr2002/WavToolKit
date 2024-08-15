@@ -3,11 +3,17 @@
 
 ## 文件列表
 
+- [m4a_to_wav.py](./m4a_to_wav.py)
+    - 将m4a文件转成wav文件
+
 - [wav_info_show.py](./wav_info_show.py)
     - 详细显示wav文件的信息
 
 - [resample_to_16kHz.py](./resample_to_16kHz.py) 
-    - 将wav文件重新采样到16kHz的脚本
+    - 批量将wav文件重新采样到16kHz的脚本
+
+- [resample_wavfile_to_16kHz.py](./resample_wavfile_to_16kHz.py)
+    - 将单个wav文件重新采样到16kHz
 
 - [plot_wav.py](./plot_wav.py)
     - 画出单通道wav文件的时域波形图以及频域功率谱图
