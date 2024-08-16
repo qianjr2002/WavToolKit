@@ -12,6 +12,10 @@ import soundfile as sf
 from tqdm import tqdm
 
 '''
+https://github.com/microsoft/DNS-Challenge/blob/master/DNSMOS/dnsmos_local.py
+'''
+
+'''
 python evaluate_dnsmos.py -t wav/noisy
 '''
 
@@ -99,7 +103,6 @@ class ComputeScore:
         return clip_dict
 
 def main(args):
-    audio_clips_list = []
     p808_model_path = os.path.join('DNSMOS', 'model_v8.onnx')
     primary_model_path = os.path.join('DNSMOS', 'sig_bak_ovr.onnx')
     print(f'Using model: {primary_model_path}')
@@ -135,13 +138,13 @@ def main(args):
     mean_BAK = df['BAK'].mean()
     mean_P808_MOS = df['P808_MOS'].mean()
 
-    print(f"Average OVRL_raw: {mean_OVRL_raw}")
-    print(f"Average SIG_raw: {mean_SIG_raw}")
-    print(f"Average BAK_raw: {mean_BAK_raw}")
-    print(f"Average OVRL: {mean_OVRL}")
-    print(f"Average SIG: {mean_SIG}")
-    print(f"Average BAK: {mean_BAK}")
-    print(f"Average P808_MOS: {mean_P808_MOS}")
+    # print(f"Average OVRL_raw: {mean_OVRL_raw}")
+    # print(f"Average SIG_raw: {mean_SIG_raw}")
+    # print(f"Average BAK_raw: {mean_BAK_raw}")
+    # print(f"Average OVRL: {mean_OVRL}")
+    # print(f"Average SIG: {mean_SIG}")
+    # print(f"Average BAK: {mean_BAK}")
+    # print(f"Average P808_MOS: {mean_P808_MOS}")
 
     result = {
         'OVRL': round(mean_OVRL, 3),

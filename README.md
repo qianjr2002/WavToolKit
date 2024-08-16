@@ -25,19 +25,19 @@
     - 计算一对wav文件的SI-SNR值
 
 - [calculate_SI-SNR.py](./calculate_SI-SNR.py)
-    - 遍历指定文件夹中的所有wav文件，计算每个文件的SI-SNR值以及平均SI-SNR值
+    - 遍历指定文件夹中的所有wav文件，计算平均SI-SNR值
 
 - [calculate_wavfile_SI-SNR.py](./calculate_wavfile_PESQ.py)
     - 计算一对wav文件的PESQ值
 
 - [calculate_SI-SNR.py](./calculate_PESQ.py)
-    - 遍历指定文件夹中的所有wav文件，计算每个文件的PESQ值以及平均PESQ值
+    - 遍历指定文件夹中的所有wav文件，计算平均PESQ值
 
 - [calculate_wavfile_STOI.py](./calculate_wavfile_STOI.py)
     - 计算一对wav文件的STOI值
 
 - [calculate_STOI.py](./calculate_STOI.py)
-    - 遍历指定文件夹中的所有wav文件，计算每个文件的STOI值以及平均STOI值
+    - 遍历指定文件夹中的所有wav文件，计算平均STOI值
 
 - [evaluate_sigmos.py](./evaluate_sigmos.py)
     - 遍历指定文件夹中的所有wav文件，计算平均BAK, SIG, OVRL等值

@@ -16,10 +16,8 @@ def main():
 
     sigmos_estimator = SigMOS(model_dir=args.model_dir)
 
-    # Load the audio file
     audio, sr = librosa.load(args.audio_file, sr=args.sr)
 
-    # Run the SigMOS estimator
     result = sigmos_estimator.run(audio, sr)
     print(result)
 
