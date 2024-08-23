@@ -6,11 +6,12 @@ from gtcrn import GTCRN
 import argparse
 
 '''
-python gtcrn_batch_infer.py --input_folder ~/VCTK-DEMAND/test/noisy/ --output_folder ~/VCTK-DEMAND/test/enhanced1/
+python gtcrn_batch_infer.py --ckpt_path gtcrn_checkpoints/model_trained_on_dns3.tar --input_folder ~/VCTK-DEMAND/test/noisy/ --output_folder ~/VCTK-DEMAND/test/enhanced2/
 '''
 
 # 解析命令行参数
 parser = argparse.ArgumentParser(description="Enhance audio files using GTCRN model")
+parser.add_argument("--ckpt_path", type=str, required=True, help="Path to the checkpoint file")
 parser.add_argument("--input_folder", type=str, required=True, help="Path to the input folder containing noisy wav files")
 parser.add_argument("--output_folder", type=str, required=True, help="Path to the output folder to save enhanced wav files")
 args = parser.parse_args()
@@ -20,8 +21,8 @@ device = torch.device("cpu")  # 如果有GPU并且希望使用，可以改为 "c
 model = GTCRN().eval()
 
 # 加载预训练模型权重
-# ckpt = torch.load(os.path.join('checkpoints', 'model_trained_on_dns3.tar'), map_location=device)
-ckpt = torch.load(os.path.join('gtcrn_checkpoints', 'model_trained_on_vctk.tar'), map_location=device)
+ckpt_path = args.ckpt_path
+ckpt = torch.load(ckpt_path, map_location=device)
 
 model.load_state_dict(ckpt['model'])
 
