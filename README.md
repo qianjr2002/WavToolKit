@@ -40,7 +40,7 @@
     - 遍历指定文件夹中的所有wav文件，计算平均STOI值
 
 - [evaluate_sigmos.py](./evaluate_sigmos.py)
-    - 遍历指定文件夹中的所有wav文件，计算平均BAK, SIG, OVRL等值
+    - 遍历指定文件夹中的所有wav文件，评估平均BAK, SIG, OVRL等值
 
 - [evaluate_wavfile_sigmos.py](./sigmos_score.py)
     - 评估单个文件的MOS_COL, MOS_DISC, MOS_LOUD, MOS_NOISE, MOS_REVERB, MOS_SIG, MOS_OVRL值
