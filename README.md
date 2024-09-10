@@ -34,10 +34,10 @@
     - 遍历指定文件夹中的所有wav文件，计算平均PESQ值
 
 - [calculate_wavfile_STOI.py](./calculate_wavfile_STOI.py)
-    - 计算一对wav文件的STOI值
+    - 计算一对wav文件的STOI值或者eSTOI值
 
 - [calculate_STOI.py](./calculate_STOI.py)
-    - 遍历指定文件夹中的所有wav文件，计算平均STOI值
+    - 遍历指定文件夹中的所有wav文件，计算平均STOI值或者eSTOI值
 
 - [evaluate_sigmos.py](./evaluate_sigmos.py)
     - 遍历指定文件夹中的所有wav文件，评估平均BAK, SIG, OVRL等值
