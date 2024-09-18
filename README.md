@@ -27,6 +27,12 @@
 - [calculate_SI-SNR.py](./calculate_SI-SNR.py)
     - 遍历指定文件夹中的所有wav文件，计算平均SI-SNR值
 
+- [calculate_wavfile_SI-SDR.py](./calculate_wavfile_SI-SDR.py)
+    - 计算一对wav文件的SI-SDR值
+
+- [calculate_SI-SDR.py](./calculate_SI-SDR.py)
+    - 遍历指定文件夹中的所有wav文件，计算平均SI-SDR值
+
 - [calculate_wavfile_PESQ.py](./calculate_wavfile_PESQ.py)
     - 计算一对wav文件的PESQ值
 
