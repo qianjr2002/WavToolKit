@@ -5,7 +5,7 @@ import argparse
 from gtcrn import GTCRN
 
 '''
-python gtcrn_infer.py --ckpt_path gtcrn_checkpoints/model_trained_on_vctk.tar --input_wav  wav/noisy/p232_005.wav --output_wav wav/p232_005_enh.wav
+python gtcrn_infer.py --ckpt_path gtcrn_checkpoints/model_trained_on_dns3.tar --input_wav  wav/noisy/p232_005.wav --output_wav wav/p232_005_enh.wav
 
 python enhance_wav.py --ckpt_path gtcrn_checkpoints/model_trained_on_vctk.tar --input_wav wav/noisy/p232_005.wav
 '''
