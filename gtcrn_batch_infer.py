@@ -17,7 +17,7 @@ parser.add_argument("--output_folder", type=str, required=True, help="Path to th
 args = parser.parse_args()
 
 # 定义设备
-device = torch.device("cpu")  # 如果有GPU并且希望使用，可以改为 "cuda"
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 如果有GPU并且希望使用，可以改为 "cuda"
 model = GTCRN().eval()
 
 # 加载预训练模型权重
@@ -51,7 +51,7 @@ for filename in tqdm(wav_files, desc="Processing files"):
     
     # 使用模型进行增强
     with torch.no_grad():
-        output = model(input[None])[0]
+        output = model(input[None].to(device))[0]
     
     # 进行逆短时傅里叶变换（ISTFT）
     enh = torch.istft(output, n_fft=512, hop_length=256, win_length=512, window=torch.hann_window(512).pow(0.5), return_complex=False)
