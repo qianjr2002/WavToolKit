@@ -7,3 +7,5 @@ librosa
 tqdm
 pesq
 pystoi
+pandas
+onnxruntime
