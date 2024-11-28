@@ -18,6 +18,7 @@ args = parser.parse_args()
 
 # 定义设备
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 如果有GPU并且希望使用，可以改为 "cuda"
+print(f'Using device: {device}')
 model = GTCRN().eval()
 
 # 加载预训练模型权重
