@@ -15,14 +15,16 @@ def get_wav_info(wav_file):
         sample_rate = wf.getframerate()
         file_size = os.path.getsize(wav_file)
         duration = wf.getnframes() / sample_rate
-        
+        total_samples = wf.getnframes()
+
         return {
             'encoding': encoding,
             'format': format_type,
             'number_of_channels': number_of_channels,
             'sample_rate': sample_rate,
             'file_size': file_size,
-            'duration': duration
+            'duration': duration,
+            'total_samples': total_samples
         }
 
 def calculate_md5(file_path):
@@ -36,7 +38,7 @@ def main():
     parser = argparse.ArgumentParser(description="Show WAV file information.")
     parser.add_argument('--wav_file', type=str, required=True, help="Path to the WAV file")
     args = parser.parse_args()
-    
+
     wav_info = get_wav_info(args.wav_file)
     md5_value = calculate_md5(args.wav_file)
     
@@ -46,6 +48,7 @@ def main():
     print(f"Sample Rate: {wav_info['sample_rate']} Hz")
     print(f"File Size: {wav_info['file_size']} bytes")
     print(f"Duration: {wav_info['duration']} seconds")
+    print(f"Total Samples: {wav_info['total_samples']}")
     print(f"MD5: {md5_value}")
 
 if __name__ == "__main__":
