@@ -1,72 +1,55 @@
 import os
 import torch
-'''
-torch.__version__
-'2.1.0'
-'''
 import soundfile as sf
 from tqdm import tqdm
 from gtcrn import GTCRN
 import argparse
+from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
-'''
-python gtcrn_batch_infer.py --ckpt_path gtcrn_checkpoints/model_trained_on_dns3.tar --input_folder ~/VCTK-DEMAND/test/noisy/ --output_folder ~/VCTK-DEMAND/test/enhanced2/
-'''
-
-# 解析命令行参数
 parser = argparse.ArgumentParser(description="Enhance audio files using GTCRN model")
 parser.add_argument("--ckpt_path", type=str, required=True, help="Path to the checkpoint file")
 parser.add_argument("--input_folder", type=str, required=True, help="Path to the input folder containing noisy wav files")
 parser.add_argument("--output_folder", type=str, required=True, help="Path to the output folder to save enhanced wav files")
 args = parser.parse_args()
 
-# 定义设备
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu") # 如果有GPU并且希望使用，可以改为 "cuda"
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f'Using device: {device}')
-model = GTCRN().eval()
+model = GTCRN().eval().to(device)
 
-# 加载预训练模型权重
-ckpt_path = args.ckpt_path
-ckpt = torch.load(ckpt_path, map_location=device)
-
+ckpt = torch.load(args.ckpt_path, map_location=device)
 model.load_state_dict(ckpt['model'])
 
-# 定义输入和输出文件夹
-input_folder = args.input_folder
-output_folder = args.output_folder
+input_folder = Path(args.input_folder)
+output_folder = Path(args.output_folder)
+output_folder.mkdir(parents=True, exist_ok=True)
 
-# 创建输出文件夹如果不存在
-os.makedirs(output_folder, exist_ok=True)
-
-# 获取所有待处理的wav文件
 wav_files = [f for f in os.listdir(input_folder) if f.endswith('.wav')]
 
-# 遍历文件夹中的所有wav文件，并显示进度条
-for filename in tqdm(wav_files, desc="Processing files"):
-    # 构建文件路径
-    input_path = os.path.join(input_folder, filename)
-    output_path = os.path.join(output_folder, filename)
-    
-    # 加载音频文件
-    mix, fs = sf.read(input_path, dtype='float32')
-    assert fs == 16000, "Sample rate of the input file must be 16000 Hz"
-    
-    # 进行短时傅里叶变换（STFT）
-    input = torch.stft(torch.from_numpy(mix), n_fft=512, hop_length=256, win_length=512, window=torch.hann_window(512).pow(0.5), return_complex=True)
-    input = torch.view_as_real(input)
-    input = input.unsqueeze(0)
-    input.to(device)
-    
-    # 使用模型进行增强
-    with torch.no_grad():
-        output = model(input)[0]
-    
-    output = output.contiguous()
-    output = torch.view_as_complex(output)
-    # 进行逆短时傅里叶变换（ISTFT）
-    enh = torch.istft(output, n_fft=512, hop_length=256, win_length=512, window=torch.hann_window(512).pow(0.5), return_complex=False)
-    
-    # 保存增强后的音频文件
-    sf.write(output_path, enh.detach().cpu().numpy(), fs)
+def process_file(filename):
+    try:
+        input_path = input_folder / filename
+        output_path = output_folder / filename
+
+        mix, fs = sf.read(input_path, dtype='float32')
+        assert fs == 16000, f"Sample rate mismatch: {fs} Hz (Expected: 16000 Hz)"
+
+        input = torch.from_numpy(mix).to(device).contiguous()
+        input = torch.stft(input, n_fft=512, hop_length=256, win_length=512, window=torch.hann_window(512, device=device), return_complex=True)
+        input = torch.view_as_real(input).contiguous().unsqueeze(0)
+
+        with torch.no_grad():
+            output = model(input)[0]
+            output = output.contiguous()
+            output = torch.view_as_complex(output).contiguous()
+
+            enh = torch.istft(output, n_fft=512, hop_length=256, win_length=512, window=torch.hann_window(512, device=device))
+
+        sf.write(output_path, enh.cpu().numpy(), fs)
+    except Exception as e:
+        print(f"Error processing {filename}: {e}")
+
+with ThreadPoolExecutor() as executor:
+    list(tqdm(executor.map(process_file, wav_files), total=len(wav_files), desc="Processing files"))
 
 print("All files processed.")
