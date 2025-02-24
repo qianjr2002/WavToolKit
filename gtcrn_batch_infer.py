@@ -1,5 +1,9 @@
 import os
 import torch
+'''
+torch.__version__
+'2.1.0'
+'''
 import soundfile as sf
 from tqdm import tqdm
 from gtcrn import GTCRN
@@ -48,12 +52,17 @@ for filename in tqdm(wav_files, desc="Processing files"):
     assert fs == 16000, "Sample rate of the input file must be 16000 Hz"
     
     # 进行短时傅里叶变换（STFT）
-    input = torch.stft(torch.from_numpy(mix), n_fft=512, hop_length=256, win_length=512, window=torch.hann_window(512).pow(0.5), return_complex=False)
+    input = torch.stft(torch.from_numpy(mix), n_fft=512, hop_length=256, win_length=512, window=torch.hann_window(512).pow(0.5), return_complex=True)
+    input = torch.view_as_real(input)
+    input = input.unsqueeze(0)
+    input.to(device)
     
     # 使用模型进行增强
     with torch.no_grad():
-        output = model(input[None].to(device))[0]
+        output = model(input)[0]
     
+    output = output.contiguous()
+    output = torch.view_as_complex(output)
     # 进行逆短时傅里叶变换（ISTFT）
     enh = torch.istft(output, n_fft=512, hop_length=256, win_length=512, window=torch.hann_window(512).pow(0.5), return_complex=False)
     
