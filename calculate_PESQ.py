@@ -1,18 +1,22 @@
 import argparse
 import os
 from scipy.io import wavfile
-from pesq import pesq
+# from pesq import pesq
 from tqdm import tqdm
-
+from torchmetrics.audio import PerceptualEvaluationSpeechQuality
+import torch
 '''
 python calculate_PESQ.py --clean_folder wav/clean --enhanced_folder wav/noisy --mode wb
 python calculate_PESQ.py --clean_folder ../VCTK-DEMAND/test/clean/ --enhanced_folder ../VCTK-DEMAND/test/enhanced/
 '''
 
 def calculate_pesq(clean_file, enhanced_file, mode):
-    rate, ref = wavfile.read(clean_file)
-    rate, deg = wavfile.read(enhanced_file)
-    pesq_score = pesq(rate, ref, deg, mode)
+    _, ref = wavfile.read(clean_file)
+    _, deg = wavfile.read(enhanced_file)
+    m=min(len(ref),len(deg))
+    # pesq_score = pesq(rate, ref[:m], deg[:m], mode)
+    wb_pesq = PerceptualEvaluationSpeechQuality(16000, mode)
+    pesq_score=wb_pesq(torch.from_numpy(deg[:m]), torch.from_numpy(ref[:m])).item()
     return pesq_score
 
 def calculate_average_pesq(clean_folder, enhanced_folder, mode):
