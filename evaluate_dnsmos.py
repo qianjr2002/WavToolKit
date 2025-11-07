@@ -149,7 +149,8 @@ def main(args):
     result = {
         'OVRL': round(mean_OVRL, 3),
         'SIG' : round(mean_SIG, 3),
-        'BAK' : round(mean_BAK, 3)
+        'BAK' : round(mean_BAK, 3),
+        'P808_MOS': round(mean_P808_MOS, 3)
     }
     print(result)
 
