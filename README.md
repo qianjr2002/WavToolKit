@@ -66,3 +66,6 @@ gtcrn 批量降噪
     ├── model_trained_on_dns3.tar
     └── model_trained_on_vctk.tar
  ```
+
+- [evaluate_wvmos.py](./evaluate_wvmos.py)
+    - 计算wvmos
