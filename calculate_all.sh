@@ -15,7 +15,7 @@ fi
 
 python calculate_PESQ.py -c "$clean_dir" -e "$enh_dir"
 python calculate_SI-SNR.py -c "$clean_dir" -e "$enh_dir"
-python calculate_STOI.py -c "$clean_dir" -e "$enh_dir"
+python calculate_STOI.py -c "$clean_dir" -e "$enh_dir" --extended
 python evaluate_dnsmos.py -t "$enh_dir"
 
 conda activate wvmos
