@@ -13,8 +13,10 @@ if [ ! -d "$clean_dir" ] || [ ! -d "$enh_dir" ]; then
     exit 1
 fi
 
-python calculate_PESQ.py -c "$clean_dir" -e "$enh_dir"
+python calculate_PESQ.py -c "$clean_dir" -e "$enh_dir" --mode wb
+python calculate_PESQ.py -c "$clean_dir" -e "$enh_dir" --mode nb
 python calculate_SI-SNR.py -c "$clean_dir" -e "$enh_dir"
+python calculate_STOI.py -c "$clean_dir" -e "$enh_dir"
 python calculate_STOI.py -c "$clean_dir" -e "$enh_dir" --extended
 python evaluate_dnsmos.py -t "$enh_dir"
 

@@ -1,10 +1,10 @@
 import argparse
 import os
 from scipy.io import wavfile
-# from pesq import pesq
+from pesq import pesq
 from tqdm import tqdm
-from torchmetrics.audio import PerceptualEvaluationSpeechQuality
-import torch
+# from torchmetrics.audio import PerceptualEvaluationSpeechQuality
+# import torch
 '''
 python calculate_PESQ.py --clean_folder wav/clean --enhanced_folder wav/noisy --mode wb
 python calculate_PESQ.py --clean_folder ../VCTK-DEMAND/test/clean/ --enhanced_folder ../VCTK-DEMAND/test/enhanced/
@@ -14,9 +14,9 @@ def calculate_pesq(clean_file, enhanced_file, mode):
     _, ref = wavfile.read(clean_file)
     _, deg = wavfile.read(enhanced_file)
     m=min(len(ref),len(deg))
-    # pesq_score = pesq(rate, ref[:m], deg[:m], mode)
-    wb_pesq = PerceptualEvaluationSpeechQuality(16000, mode)
-    pesq_score=wb_pesq(torch.from_numpy(deg[:m]), torch.from_numpy(ref[:m])).item()
+    pesq_score = pesq(16000, ref[:m], deg[:m], mode)
+    # wb_pesq = PerceptualEvaluationSpeechQuality(16000, mode)
+    # pesq_score=wb_pesq(torch.from_numpy(deg[:m]), torch.from_numpy(ref[:m])).item()
     return pesq_score
 
 def calculate_average_pesq(clean_folder, enhanced_folder, mode):
@@ -37,7 +37,7 @@ def calculate_average_pesq(clean_folder, enhanced_folder, mode):
 
     if pesq_list:
         average_pesq = sum(pesq_list) / len(pesq_list)
-        print("Average PESQ:", average_pesq)
+        print("Average PESQ:", mode, average_pesq)
     else:
         print("No PESQ values calculated. Check if the folders contain matching WAV files.")
 

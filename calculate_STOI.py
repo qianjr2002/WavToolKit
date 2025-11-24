@@ -3,9 +3,9 @@ import os
 # import numpy as np
 from tqdm import tqdm
 import scipy.io.wavfile as wav
-#from pystoi.stoi import stoi
-from torchmetrics.audio import ShortTimeObjectiveIntelligibility
-import torch
+from pystoi.stoi import stoi
+# from torchmetrics.audio import ShortTimeObjectiveIntelligibility
+# import torch
 '''
 STOI:
 python calculate_STOI.py -c wav/clean/ -e wav/gtcrn_enh/
@@ -25,11 +25,9 @@ def calculate_stoi(clean_file, enhanced_file, extended):
     enhanced_signal = enhanced_signal[:min_len]
     
 
-
-    stoi = ShortTimeObjectiveIntelligibility(fs_clean, extended)
-
-    
-    stoi_value = stoi(torch.tensor(enhanced_signal),torch.tensor(clean_signal)).item()
+    stoi_value = stoi(clean_signal, enhanced_signal, fs_clean, extended=extended)
+    # stoi = ShortTimeObjectiveIntelligibility(fs_clean, extended)
+    # stoi_value = stoi(torch.tensor(enhanced_signal),torch.tensor(clean_signal)).item()
 
 
     return stoi_value
