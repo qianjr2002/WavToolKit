@@ -56,7 +56,7 @@ def calculate_mos(file_path=None, dir_path=None, mean=True, cuda=True):
         
         mos = model.calculate_dir(dir_path, mean=mean)
         if mean:
-            print(f"平均MOS分数: {mos:.4f}")
+            print(f"WVMOS分数: {mos:.4f}")
         else:
             print(f"各文件MOS分数: {mos}")
         return mos
