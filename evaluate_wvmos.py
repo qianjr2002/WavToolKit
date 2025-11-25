@@ -47,7 +47,7 @@ def calculate_mos(file_path=None, dir_path=None, mean=True, cuda=True):
             raise FileNotFoundError(f"文件不存在: {file_path}")
         
         mos = model.calculate_one(file_path)
-        print(f"MOS分数: {mos:.4f}")
+        print(f"WVMOS分数: {mos:.4f}")
         return mos
         
     elif dir_path:
