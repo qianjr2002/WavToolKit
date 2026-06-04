@@ -82,6 +82,7 @@ class DNSMOSScore:
         num_hops = int(np.floor(len(audio) / fs) - INPUT_LENGTH) + 1
         hop_len_samples = fs
         predicted_mos_ovr, predicted_mos_sig, predicted_mos_bak = [], [], []
+        predicted_p808_mos = []
 
         for idx in range(num_hops):
             seg = audio[int(idx * hop_len_samples): int((idx + INPUT_LENGTH) * hop_len_samples)]
@@ -94,10 +95,17 @@ class DNSMOSScore:
             predicted_mos_bak.append(bak)
             predicted_mos_ovr.append(ovr)
 
+            # P808 MOS: mel-spectrogram input, p808 model
+            p808_input = np.array(self.audio_melspec(audio=seg[:-160])).astype("float32")[np.newaxis, :, :]
+            p808_oi = {"input_1": p808_input}
+            p808_mos = self.p808_onnx_sess.run(None, p808_oi)[0][0][0]
+            predicted_p808_mos.append(p808_mos)
+
         return {
             "OVRL": float(np.mean(predicted_mos_ovr)),
             "SIG": float(np.mean(predicted_mos_sig)),
             "BAK": float(np.mean(predicted_mos_bak)),
+            "P808_MOS": float(np.mean(predicted_p808_mos)),
         }
 
 
@@ -202,13 +210,14 @@ def main():
             try:
                 scorer = DNSMOSScore()
                 wavs = glob.glob(os.path.join(enhanced_dir, "*.wav"))
-                ovrl_list, sig_list, bak_list = [], [], []
+                ovrl_list, sig_list, bak_list, p808_list = [], [], [], []
                 for w in tqdm(wavs, desc="DNSMOS"):
                     result = scorer(w)
                     ovrl_list.append(result["OVRL"])
                     sig_list.append(result["SIG"])
                     bak_list.append(result["BAK"])
-                print(f"  DNSMOS OVRL: {np.mean(ovrl_list):.4f}, SIG: {np.mean(sig_list):.4f}, BAK: {np.mean(bak_list):.4f}")
+                    p808_list.append(result["P808_MOS"])
+                print(f"  DNSMOS OVRL: {np.mean(ovrl_list):.4f}, SIG: {np.mean(sig_list):.4f}, BAK: {np.mean(bak_list):.4f}, P808_MOS: {np.mean(p808_list):.4f}")
             except Exception as ex:
                 print(f"  DNSMOS failed: {ex}")
     elif not _HAS_DNSMOS:
